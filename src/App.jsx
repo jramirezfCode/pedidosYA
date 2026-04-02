@@ -78,9 +78,10 @@ export default function App() {
   }, [results])
 
   const symbol = country?.symbol || 'S/'
+  const isDark = theme === 'dark'
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] text-white">
+    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'bg-[#0a0a0b] text-white' : 'bg-gray-50 text-gray-900'}`}>
       <Navbar
         theme={theme}
         onToggleTheme={toggleTheme}
@@ -89,44 +90,40 @@ export default function App() {
       />
 
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-        {/* Hero search */}
         <div className="mb-12 text-center">
-          <h1 className="font-display mb-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <h1 className={`font-display mb-2 text-3xl font-bold tracking-tight sm:text-4xl ${isDark ? 'text-white' : 'text-gray-900'}`}>
             {t('tagline')}
           </h1>
           {country && (
-            <p className="mb-8 text-sm text-white/35">
+            <p className={`mb-8 text-sm ${isDark ? 'text-white/35' : 'text-gray-500'}`}>
               {country.flag} {t(`countries.${country.code}`)} · {country.currency}
             </p>
           )}
           <div className="mx-auto max-w-2xl">
-            <SearchBar onSearch={handleSearch} loading={loading} />
+            <SearchBar onSearch={handleSearch} loading={loading} theme={theme} />
           </div>
         </div>
 
-        {/* Error */}
         {error && (
           <div className="mb-8 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
             {error}
           </div>
         )}
 
-        {/* Loading skeletons */}
         {loading && (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {Array.from({ length: 10 }).map((_, i) => (
-              <SkeletonCard key={i} />
+              <SkeletonCard key={i} theme={theme} />
             ))}
           </div>
         )}
 
-        {/* Results */}
         {!loading && searched && (
           <>
             {filtered.length === 0 ? (
               <div className="py-20 text-center">
-                <p className="text-lg text-white/40">{t('search.noResults')} "{query}"</p>
-                <p className="mt-1 text-sm text-white/25">{t('search.tryAnother')}</p>
+                <p className={`text-lg ${isDark ? 'text-white/40' : 'text-gray-400'}`}>{t('search.noResults')} "{query}"</p>
+                <p className={`mt-1 text-sm ${isDark ? 'text-white/25' : 'text-gray-300'}`}>{t('search.tryAnother')}</p>
               </div>
             ) : (
               <>
@@ -138,6 +135,7 @@ export default function App() {
                     selectedStore={selectedStore}
                     onStoreChange={setSelectedStore}
                     total={filtered.length}
+                    theme={theme}
                   />
                 </div>
 
@@ -149,18 +147,14 @@ export default function App() {
                       index={i}
                       isLowest={product.extractedPrice === lowestPrice}
                       symbol={symbol}
+                      theme={theme}
                     />
                   ))}
                 </div>
 
-                {/* Price history */}
                 {priceHistory.length > 0 && (
                   <div className="mt-12 grid gap-5 lg:grid-cols-2">
-                    <PriceChart
-                      history={priceHistory}
-                      symbol={symbol}
-                      query={query}
-                    />
+                    <PriceChart history={priceHistory} symbol={symbol} query={query} />
                     <PriceTable history={priceHistory} symbol={symbol} />
                   </div>
                 )}
@@ -169,18 +163,17 @@ export default function App() {
           </>
         )}
 
-        {/* Empty state */}
         {!loading && !searched && (
           <div className="py-24 text-center">
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/8 bg-white/3">
+            <div className={`mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border ${isDark ? 'border-white/8 bg-white/3' : 'border-gray-200 bg-white'}`}>
               <span className="text-2xl">🔍</span>
             </div>
-            <p className="text-white/30">{t('history.noData')}</p>
+            <p className={isDark ? 'text-white/30' : 'text-gray-400'}>{t('history.noData')}</p>
           </div>
         )}
       </main>
 
-      <footer className="mt-20 border-t border-white/5 py-6 text-center text-xs text-white/20">
+      <footer className={`mt-20 border-t py-6 text-center text-xs ${isDark ? 'border-white/5 text-white/20' : 'border-gray-200 text-gray-400'}`}>
         {t('footer')} · PrecioYa {new Date().getFullYear()}
       </footer>
     </div>
