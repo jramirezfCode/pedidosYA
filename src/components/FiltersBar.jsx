@@ -1,44 +1,47 @@
 import { useTranslation } from 'react-i18next'
 import { ArrowUpDown, Store } from 'lucide-react'
 
-export default function FiltersBar({ sort, onSortChange, stores, selectedStore, onStoreChange, total }) {
+export default function FiltersBar({ sort, onSortChange, stores, selectedStore, onStoreChange, total, theme }) {
   const { t } = useTranslation()
+  const isDark = theme === 'dark'
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
-      <p className="text-sm text-white/40">
-        <span className="font-medium text-white/70">{total}</span> {t('search.results')}
+      <p className={`text-sm ${isDark ? 'text-white/40' : 'text-gray-500'}`}>
+        <span className={`font-medium ${isDark ? 'text-white/70' : 'text-gray-700'}`}>{total}</span> {t('search.results')}
       </p>
 
       <div className="flex flex-wrap items-center gap-2">
-        {/* Store filter */}
         {stores.length > 1 && (
-          <div className="flex items-center gap-1.5 rounded-xl border border-white/8 bg-white/4 px-3 py-1.5">
-            <Store size={13} className="text-white/40" />
+          <div className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 ${
+            isDark ? 'border-white/8 bg-white/4' : 'border-gray-200 bg-white shadow-sm'
+          }`}>
+            <Store size={13} className={isDark ? 'text-white/40' : 'text-gray-400'} />
             <select
               value={selectedStore}
               onChange={(e) => onStoreChange(e.target.value)}
-              className="bg-transparent text-sm text-white/70 outline-none"
+              className={`bg-transparent text-sm outline-none ${isDark ? 'text-white/70' : 'text-gray-700'}`}
             >
-              <option value="">{t('filters.allStores')}</option>
+              <option value="" className={isDark ? 'bg-[#18181c]' : 'bg-white'}>{t('filters.allStores')}</option>
               {stores.map((s) => (
-                <option key={s} value={s} className="bg-[#18181c]">{s}</option>
+                <option key={s} value={s} className={isDark ? 'bg-[#18181c]' : 'bg-white'}>{s}</option>
               ))}
             </select>
           </div>
         )}
 
-        {/* Sort */}
-        <div className="flex items-center gap-1.5 rounded-xl border border-white/8 bg-white/4 px-3 py-1.5">
-          <ArrowUpDown size={13} className="text-white/40" />
+        <div className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 ${
+          isDark ? 'border-white/8 bg-white/4' : 'border-gray-200 bg-white shadow-sm'
+        }`}>
+          <ArrowUpDown size={13} className={isDark ? 'text-white/40' : 'text-gray-400'} />
           <select
             value={sort}
             onChange={(e) => onSortChange(e.target.value)}
-            className="bg-transparent text-sm text-white/70 outline-none"
+            className={`bg-transparent text-sm outline-none ${isDark ? 'text-white/70' : 'text-gray-700'}`}
           >
-            <option value="price_asc" className="bg-[#18181c]">{t('filters.sortPrice')}</option>
-            <option value="price_desc" className="bg-[#18181c]">{t('filters.sortPriceDesc')}</option>
-            <option value="rating" className="bg-[#18181c]">{t('filters.sortRating')}</option>
+            <option value="price_asc" className={isDark ? 'bg-[#18181c]' : 'bg-white'}>{t('filters.sortPrice')}</option>
+            <option value="price_desc" className={isDark ? 'bg-[#18181c]' : 'bg-white'}>{t('filters.sortPriceDesc')}</option>
+            <option value="rating" className={isDark ? 'bg-[#18181c]' : 'bg-white'}>{t('filters.sortRating')}</option>
           </select>
         </div>
       </div>
