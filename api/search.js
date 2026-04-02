@@ -21,7 +21,15 @@ module.exports = async function handler(req, res) {
     url.searchParams.set('num', '20')
     url.searchParams.set('api_key', SERP_KEY)
     const resp = await fetch(url.toString())
-    if (!resp.ok) throw new Error(`SerpApi error: ${resp.status}`)
+if (!resp.ok) {
+  const errBody = await resp.text()
+  throw new Error(`SerpApi error: ${resp.status} - ${errBody}`)
+}
+```
+
+Commit, espera el redeploy y vuelve a probar:
+```
+https://pedidos-ya-seven.vercel.app/api/search?q=iphone&country=pe&hl=es
     const data = await resp.json()
     const results = (data.shopping_results || []).map((item) => ({
       id:           item.product_id || String(Math.random()),
