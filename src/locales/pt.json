@@ -1,0 +1,66 @@
+{
+  "appName": "PrecioYa",
+  "tagline": "Compare preços em tempo real",
+  "search": {
+    "placeholder": "Pesquise qualquer produto...",
+    "button": "Pesquisar",
+    "searching": "Pesquisando...",
+    "results": "resultados",
+    "noResults": "Sem resultados para",
+    "tryAnother": "Tente outro termo de pesquisa",
+    "example": "Ex: MacBook Pro M4, Samsung Galaxy S25, PlayStation 5"
+  },
+  "filters": {
+    "country": "País",
+    "sortBy": "Ordenar por",
+    "sortPrice": "Menor preço",
+    "sortPriceDesc": "Maior preço",
+    "sortRating": "Melhor avaliação",
+    "allStores": "Todas as lojas",
+    "freeShipping": "Frete grátis"
+  },
+  "product": {
+    "goToStore": "Ver na loja",
+    "reviews": "avaliações",
+    "freeDelivery": "Entrega grátis",
+    "lowestPrice": "Melhor preço",
+    "discount": "desconto",
+    "noPrice": "Ver preço"
+  },
+  "history": {
+    "title": "Histórico de preços",
+    "subtitle": "Evolução do preço nos últimos meses",
+    "month": "Mês",
+    "price": "Preço",
+    "lowestEver": "Mínimo histórico",
+    "currentPrice": "Preço atual",
+    "table": "Tabela de preços",
+    "noData": "Pesquise um produto para ver seu histórico"
+  },
+  "nav": {
+    "search": "Pesquisa",
+    "history": "Histórico",
+    "language": "Idioma",
+    "theme": "Tema"
+  },
+  "theme": {
+    "dark": "Escuro",
+    "light": "Claro"
+  },
+  "countries": {
+    "pe": "Peru",
+    "mx": "México",
+    "ar": "Argentina",
+    "cl": "Chile",
+    "co": "Colômbia",
+    "us": "Estados Unidos",
+    "es": "Espanha",
+    "br": "Brasil",
+    "uy": "Uruguai",
+    "ec": "Equador",
+    "bo": "Bolívia",
+    "py": "Paraguai",
+    "ve": "Venezuela"
+  },
+  "footer": "Preços em tempo real via Google Shopping"
+}

@@ -1,0 +1,66 @@
+{
+  "appName": "PrecioYa",
+  "tagline": "Compare prices in real time",
+  "search": {
+    "placeholder": "Search any product...",
+    "button": "Search",
+    "searching": "Searching...",
+    "results": "results",
+    "noResults": "No results for",
+    "tryAnother": "Try a different search term",
+    "example": "E.g: MacBook Pro M4, Samsung Galaxy S25, PlayStation 5"
+  },
+  "filters": {
+    "country": "Country",
+    "sortBy": "Sort by",
+    "sortPrice": "Lowest price",
+    "sortPriceDesc": "Highest price",
+    "sortRating": "Best rating",
+    "allStores": "All stores",
+    "freeShipping": "Free shipping"
+  },
+  "product": {
+    "goToStore": "View in store",
+    "reviews": "reviews",
+    "freeDelivery": "Free delivery",
+    "lowestPrice": "Best price",
+    "discount": "off",
+    "noPrice": "View price"
+  },
+  "history": {
+    "title": "Price history",
+    "subtitle": "Price trend over the last months",
+    "month": "Month",
+    "price": "Price",
+    "lowestEver": "All-time low",
+    "currentPrice": "Current price",
+    "table": "Price table",
+    "noData": "Search a product to see its price history"
+  },
+  "nav": {
+    "search": "Search",
+    "history": "History",
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "theme": {
+    "dark": "Dark",
+    "light": "Light"
+  },
+  "countries": {
+    "pe": "Peru",
+    "mx": "Mexico",
+    "ar": "Argentina",
+    "cl": "Chile",
+    "co": "Colombia",
+    "us": "United States",
+    "es": "Spain",
+    "br": "Brazil",
+    "uy": "Uruguay",
+    "ec": "Ecuador",
+    "bo": "Bolivia",
+    "py": "Paraguay",
+    "ve": "Venezuela"
+  },
+  "footer": "Real-time prices via Google Shopping"
+}

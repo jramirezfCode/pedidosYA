@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #0a0a0b;
+    color: white;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  /* Light mode overrides */
+  html:not(.dark) body {
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+  }
+
+  html:not(.dark) nav {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+  }
+
+  html:not(.dark) .text-white {
+    color: #1d1d1f;
+  }
+
+  html:not(.dark) .text-white\/70 {
+    color: rgba(29, 29, 31, 0.7);
+  }
+
+  html:not(.dark) .text-white\/40 {
+    color: rgba(29, 29, 31, 0.4);
+  }
+
+  html:not(.dark) .text-white\/30 {
+    color: rgba(29, 29, 31, 0.3);
+  }
+
+  html:not(.dark) .text-white\/25 {
+    color: rgba(29, 29, 31, 0.25);
+  }
+
+  html:not(.dark) .bg-white\/3 {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  html:not(.dark) .bg-white\/4 {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  html:not(.dark) .bg-white\/5 {
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+  html:not(.dark) .border-white\/6 {
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+
+  html:not(.dark) .border-white\/8 {
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  html:not(.dark) .border-white\/10 {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  html:not(.dark) .hover\:bg-white\/5:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .font-display {
+    font-family: 'Syne', sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'DM Mono', monospace;
+  }
+}
+
+/* Custom select styling */
+select option {
+  background-color: #18181c;
+  color: white;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.4s ease both;
+}
