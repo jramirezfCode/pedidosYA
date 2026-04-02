@@ -7,11 +7,11 @@ module.exports = async function handler(req, res) {
   const SERP_KEY = process.env.SERPAPI_KEY
   if (!SERP_KEY) return res.status(500).json({ error: 'API key not configured' })
   const glMap = {
-    pe: 'pe', mx: 'mx', ar: 'ar', cl: 'cl', co: 'co',
-    us: 'us', es: 'es', br: 'br', uy: 'uy', ec: 'ec',
-    bo: 'bo', py: 'py', ve: 've',
+    pe: 'us', mx: 'mx', ar: 'ar', cl: 'cl', co: 'co',
+    us: 'us', es: 'es', br: 'br', uy: 'us', ec: 'us',
+    bo: 'us', py: 'us', ve: 've',
   }
-  const gl = glMap[country.toLowerCase()] || 'pe'
+  const gl = glMap[country.toLowerCase()] || 'us'
   try {
     const url = new URL('https://serpapi.com/search')
     url.searchParams.set('engine', 'google_shopping')
