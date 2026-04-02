@@ -1,6 +1,5 @@
 {
   "rewrites": [
-    { "source": "/api/search", "destination": "/api/search.cjs" },
     { "source": "/api/(.*)", "destination": "/api/$1" }
   ]
 }
