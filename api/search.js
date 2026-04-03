@@ -1,33 +1,20 @@
-const cheerio = require('cheerio')
-
 async function scrapeRipley(q, scraperKey) {
   try {
-    const url = `https://simple.ripley.com.pe/search?query=${encodeURIComponent(q)}`
-    const resp = await fetch(`http://api.scraperapi.com?api_key=${scraperKey}&url=${encodeURIComponent(url)}&country_code=pe&render=true`)
-    const html = await resp.text()
-    const $ = cheerio.load(html)
-    const results = []
-    $('.catalog-item, [class*="product-card"], [class*="ProductCard"]').each((_, el) => {
-      const title = $(el).find('[class*="title"], [class*="name"], h2, h3').first().text().trim()
-      const priceText = $(el).find('[class*="price"], [class*="Price"]').first().text().trim()
-      const price = parseFloat(priceText.replace(/[^0-9.]/g, ''))
-      const link = $(el).find('a').first().attr('href')
-      const thumbnail = $(el).find('img').first().attr('src')
-      if (title && price) {
-        results.push({
-          id: `ripley_${Math.random()}`,
-          title,
-          price: `S/ ${price.toLocaleString('es')}`,
-          extractedPrice: price,
-          currency: 'PEN',
-          source: 'Ripley',
-          link: link ? (link.startsWith('http') ? link : `https://simple.ripley.com.pe${link}`) : null,
-          thumbnail,
-          isLocal: true,
-        })
-      }
-    })
-    return results
+    const url = `https://simple.ripley.com.pe/api/2.0/page/search?q=${encodeURIComponent(q)}&page=1&lang=es`
+    const resp = await fetch(`http://api.scraperapi.com?api_key=${scraperKey}&url=${encodeURIComponent(url)}&country_code=pe`)
+    const data = await resp.json()
+    const items = data?.results?.products || data?.products || []
+    return items.slice(0, 10).map((item) => ({
+      id: `ripley_${item.SKUCode || Math.random()}`,
+      title: item.displayName || item.name || '',
+      price: `S/ ${item.prices?.normalPrice?.toLocaleString('es') || ''}`,
+      extractedPrice: item.prices?.normalPrice || null,
+      currency: 'PEN',
+      source: 'Ripley',
+      link: `https://simple.ripley.com.pe${item.url || ''}`,
+      thumbnail: item.image || null,
+      isLocal: true,
+    })).filter(r => r.title && r.extractedPrice)
   } catch (e) {
     console.error('Ripley error:', e.message)
     return []
@@ -36,32 +23,21 @@ async function scrapeRipley(q, scraperKey) {
 
 async function scrapeFalabella(q, scraperKey) {
   try {
-    const url = `https://www.falabella.com.pe/falabella-pe/search?Ntt=${encodeURIComponent(q)}`
-    const resp = await fetch(`http://api.scraperapi.com?api_key=${scraperKey}&url=${encodeURIComponent(url)}&country_code=pe&render=true`)
-    const html = await resp.text()
-    const $ = cheerio.load(html)
-    const results = []
-    $('[class*="product-item"], [class*="grid-pod"], [class*="ProductItem"]').each((_, el) => {
-      const title = $(el).find('[class*="title"], [class*="displayName"], h2, h3').first().text().trim()
-      const priceText = $(el).find('[class*="price"], [class*="Price"]').first().text().trim()
-      const price = parseFloat(priceText.replace(/[^0-9.]/g, ''))
-      const link = $(el).find('a').first().attr('href')
-      const thumbnail = $(el).find('img').first().attr('src')
-      if (title && price) {
-        results.push({
-          id: `saga_${Math.random()}`,
-          title,
-          price: `S/ ${price.toLocaleString('es')}`,
-          extractedPrice: price,
-          currency: 'PEN',
-          source: 'Saga Falabella',
-          link: link ? (link.startsWith('http') ? link : `https://www.falabella.com.pe${link}`) : null,
-          thumbnail,
-          isLocal: true,
-        })
-      }
-    })
-    return results
+    const url = `https://www.falabella.com.pe/falabella-pe/api/2.0/page/category?currentPage=1&Ntt=${encodeURIComponent(q)}&productsPerPage=10`
+    const resp = await fetch(`http://api.scraperapi.com?api_key=${scraperKey}&url=${encodeURIComponent(url)}&country_code=pe`)
+    const data = await resp.json()
+    const items = data?.state?.resultList || data?.results?.products || []
+    return items.slice(0, 10).map((item) => ({
+      id: `saga_${item.skuId || Math.random()}`,
+      title: item.displayName || item.name || '',
+      price: `S/ ${item.prices?.[0]?.originalPrice?.toLocaleString('es') || ''}`,
+      extractedPrice: item.prices?.[0]?.originalPrice || null,
+      currency: 'PEN',
+      source: 'Saga Falabella',
+      link: item.url ? `https://www.falabella.com.pe${item.url}` : null,
+      thumbnail: item.mediaAssets?.[0]?.url || null,
+      isLocal: true,
+    })).filter(r => r.title && r.extractedPrice)
   } catch (e) {
     console.error('Falabella error:', e.message)
     return []
@@ -70,32 +46,21 @@ async function scrapeFalabella(q, scraperKey) {
 
 async function scrapeHiraoka(q, scraperKey) {
   try {
-    const url = `https://www.hiraoka.com.pe/search?q=${encodeURIComponent(q)}`
-    const resp = await fetch(`http://api.scraperapi.com?api_key=${scraperKey}&url=${encodeURIComponent(url)}&country_code=pe&render=true`)
-    const html = await resp.text()
-    const $ = cheerio.load(html)
-    const results = []
-    $('[class*="product"], [class*="Product"]').each((_, el) => {
-      const title = $(el).find('[class*="title"], [class*="name"], h2, h3').first().text().trim()
-      const priceText = $(el).find('[class*="price"], [class*="Price"]').first().text().trim()
-      const price = parseFloat(priceText.replace(/[^0-9.]/g, ''))
-      const link = $(el).find('a').first().attr('href')
-      const thumbnail = $(el).find('img').first().attr('src')
-      if (title && price) {
-        results.push({
-          id: `hiraoka_${Math.random()}`,
-          title,
-          price: `S/ ${price.toLocaleString('es')}`,
-          extractedPrice: price,
-          currency: 'PEN',
-          source: 'Hiraoka',
-          link: link ? (link.startsWith('http') ? link : `https://www.hiraoka.com.pe${link}`) : null,
-          thumbnail,
-          isLocal: true,
-        })
-      }
-    })
-    return results
+    const url = `https://www.hiraoka.com.pe/search?q=${encodeURIComponent(q)}&format=json`
+    const resp = await fetch(`http://api.scraperapi.com?api_key=${scraperKey}&url=${encodeURIComponent(url)}&country_code=pe`)
+    const data = await resp.json()
+    const items = data?.products || data?.results || []
+    return items.slice(0, 10).map((item) => ({
+      id: `hiraoka_${item.id || Math.random()}`,
+      title: item.name || item.title || '',
+      price: `S/ ${item.price?.toLocaleString('es') || ''}`,
+      extractedPrice: item.price || null,
+      currency: 'PEN',
+      source: 'Hiraoka',
+      link: item.url ? `https://www.hiraoka.com.pe${item.url}` : null,
+      thumbnail: item.image || null,
+      isLocal: true,
+    })).filter(r => r.title && r.extractedPrice)
   } catch (e) {
     console.error('Hiraoka error:', e.message)
     return []
@@ -140,7 +105,7 @@ module.exports = async function handler(req, res) {
   const config = countryConfig[countryCode] || { gl: 'us', location: 'United States' }
   const results = []
 
-  // 1. Tiendas peruanas con ScraperAPI (solo para Perú)
+  // 1. Tiendas peruanas (Ripley, Falabella, Hiraoka)
   if (countryCode === 'pe' && SCRAPER_KEY) {
     const [ripley, falabella, hiraoka] = await Promise.all([
       scrapeRipley(q, SCRAPER_KEY),
